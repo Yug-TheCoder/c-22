@@ -6,6 +6,7 @@ const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
+var engine,world;
 
 function preload()
 {
@@ -20,6 +21,9 @@ function preload()
 function setup() {
 	createCanvas(800, 750);
 
+    engine = Engine.create();
+	world = engine.world;
+
 	//write code to play fairyVoice sound
     fairyV.play();
 	//create fairy sprite and add animation for fairy
@@ -31,10 +35,6 @@ function setup() {
     fairy= createSprite(200,400,0,0);
 	fairy.addAnimation("nottooth",fairyA);
 	fairy.scale=0.3;
-
-
-	engine = Engine.create();
-	world = engine.world;
 
 	starBody = Bodies.circle(650 , 30 , 5 , {restitution:0.5, isStatic:true});
 	World.add(world, starBody);
@@ -51,10 +51,11 @@ function draw() {
   star.y= starBody.position.y 
 
   console.log(star.y);
+  Engine.update(engine);
 
   //write code to stop star in the hand of fairy
-  if(star.y > 470 && starBody.position.y > 470){
-     matter.setStatic(starBody,true);
+  if(star.y > 330 && starBody.position.y > 330){
+     Matter.Body.setStatic(starBody,true);
       
   }
   
@@ -70,13 +71,13 @@ function keyPressed() {
 	}
 
 	//write code to move fairy left and right
-	 if(keyCode === leftArrow){
+	 if(keyCode === LEFT_ARROW){
        
 	 	fairy.x = fairy.x-10;      
 
 	 }
 
-	 if(keyCode === rightArrow){
+	 if(keyCode === RIGHT_ARROW){
        
 	 	fairy.x = fairy.x+10;      
 
